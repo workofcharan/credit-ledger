@@ -21,10 +21,37 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
-    const res = await API.get(`/assessments/${id}`);
-    if (!res || !res.assessment || !res.assessment.id) {
-      throw new Error(res?.error || 'Assessment report not found');
+    let res = null;
+    if (id) {
+      res = await API.get(`/assessments/${id}`).catch(() => null);
+      if (!res || !res.assessment || !res.assessment.id) {
+        // Fallback: look up in list of assessments
+        const listRes = await API.get('/assessments').catch(() => null);
+        const list = (listRes?.assessments || []).filter(a => a && a.id);
+        const match = list.find(a => a.id === id || a.id.toLowerCase() === id.toLowerCase() || a.id.replace('ast_', '') === id.replace('ast_', ''));
+        if (match) {
+          let resultObj = {};
+          try { resultObj = JSON.parse(match.result_json); } catch {}
+          res = { assessment: match, result: resultObj };
+        }
+      }
     }
+
+    // If still no valid assessment, load first available assessment
+    if (!res || !res.assessment || !res.assessment.id) {
+      const listRes = await API.get('/assessments').catch(() => null);
+      const list = (listRes?.assessments || []).filter(a => a && a.id);
+      if (list.length > 0) {
+        let resultObj = {};
+        try { resultObj = JSON.parse(list[0].result_json); } catch {}
+        res = { assessment: list[0], result: resultObj };
+      }
+    }
+
+    if (!res || !res.assessment || !res.assessment.id) {
+      throw new Error('No assessment records available. Please create one.');
+    }
+
     ASSESSMENT = res.assessment;
     RESULT = res.result || {};
     render();

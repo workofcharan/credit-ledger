@@ -449,3 +449,15 @@ tr.phase-moratorium td { background: #fff7e8; }
   .kpi-strip { grid-template-columns: repeat(2, 1fr); }
   .chart-grid { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 768px) {
+  .site-header { height: auto; padding: 12px 0; }
+  .site-header .container { flex-direction: column; align-items: flex-start; height: auto; gap: 12px; }
+  .main-nav { flex-wrap: wrap; width: 100%; gap: 4px; }
+  .main-nav a, .main-nav button.nav-link { padding: 6px 10px; font-size: 13px; }
+  .masthead .container { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .brand .badge { width: 36px; height: 36px; font-size: 16px; }
+  .brand .brand-text .name { font-size: 14px; }
+  .kpi-strip { grid-template-columns: 1fr; }
+  .compare-grid { grid-template-columns: 1fr !important; }
+}
