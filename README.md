@@ -42,22 +42,24 @@ decline requires a written note and is recorded with the officer's name for audi
 
 ## Tech stack
 
-- **Hosting:** Firebase Hosting (static `public/` folder)
-- **API:** Firebase Cloud Functions (Express app) — see `functions/index.js`
-- **Database:** Firestore (`officers` and `assessments` collections)
-- **Frontend:** Vanilla HTML/CSS/JS, no build step, no framework
-- **Charts:** Chart.js · **PDF export:** jsPDF + html2canvas (real multi-page PDF, not browser print)
+- **Hosting / Cloud:** Vercel (Static files + Node Serverless API via `vercel.json` and `api/index.js`) & Firebase (Hosting + Cloud Functions)
+- **Frontend:** Vanilla HTML5, CSS3, JavaScript (ES6+), responsive design, no build step
+- **Charts:** Chart.js · **PDF export:** jsPDF + html2canvas (multi-page PDF report)
+- **Local Dev Server:** Built-in Node.js server (`server.js`) with zero npm dependencies
 
-## Deploying
+## Deploying to Vercel (Instant)
 
-See **`DEPLOY.md`** for full step-by-step instructions. In short:
+1. Push your repository to GitHub.
+2. Import the project into [Vercel](https://vercel.com/new).
+3. Click **Deploy** (no build settings configuration needed).
 
+Or with Vercel CLI:
 ```bash
-npm install -g firebase-tools
-firebase login
-cd functions && npm install && cd ..
-# edit .firebaserc with your real Firebase project ID
-firebase deploy
+npm install -g vercel
+vercel --prod
+```
+
+See **`DEPLOY.md`** for detailed step-by-step instructions.
 ```
 
 ## Demo login

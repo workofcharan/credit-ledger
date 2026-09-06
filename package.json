@@ -5,9 +5,15 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "build": "echo Build complete"
   },
-  "keywords": ["credit-scoring", "fraud-detection", "fintech", "sih2026"],
+  "keywords": [
+    "credit-scoring",
+    "fraud-detection",
+    "fintech",
+    "sih2026"
+  ],
   "author": "Credit Ledger Team",
   "license": "ISC"
 }

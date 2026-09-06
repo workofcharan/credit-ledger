@@ -1,92 +1,84 @@
-# Deploying the Explainable Credit Ledger to Firebase
+# Deployment Guide — Explainable Credit Ledger
 
-## 0. One-time setup
+This application is configured for instant 1-click deployment on **Vercel** as well as **Firebase Hosting & Cloud Functions**.
 
-1. **Create a Firebase project**
-   https://console.firebase.google.com → Add project → note the **Project ID**.
+---
 
-2. **Upgrade to the Blaze (pay-as-you-go) plan**
-   Required for Cloud Functions. The free tier is generous — a hackathon demo
-   will not incur charges. Console: ⚙ → Usage and billing → Modify plan → Blaze.
+## ⚡ Option 1: Deploy to Vercel (Recommended & Easiest)
 
-3. **Enable Firestore**
-   Console → Build → Firestore Database → Create database → pick a nearby
-   location (e.g. `asia-south1`) → Production mode.
+The project includes `vercel.json` and a serverless API handler (`api/index.js`) requiring **zero external setup or build steps**.
 
-4. **Install the Firebase CLI** (once, on your computer):
+### Method A: Deploy via Vercel Web Dashboard (GitHub)
+1. Push this repository to your **GitHub** / **GitLab** / **Bitbucket**.
+2. Go to [vercel.com/new](https://vercel.com/new) and log in.
+3. Import your repository.
+4. Keep the default settings:
+   - **Framework Preset**: *Other*
+   - **Root Directory**: `./`
+   - **Build Command**: *Leave blank* or `echo Build complete`
+   - **Output Directory**: *Leave blank* (managed automatically via `vercel.json`)
+5. Click **Deploy**.
+6. Your application is live within 30 seconds with a production URL like `https://credit-ledger-xyz.vercel.app`!
+
+---
+
+### Method B: Deploy via Vercel CLI
+Run the following in your project folder:
+
+```powershell
+# 1. Install Vercel CLI if not already installed
+npm install -g vercel
+
+# 2. Deploy preview
+vercel
+
+# 3. Deploy to production
+vercel --prod
+```
+
+### Default Login Credentials on Vercel:
+- **Officer Code:** `DEMO001`
+- **Password:** `Demo@123`
+
+*(You can also register new officers or test immediately using client-side offline presets).*
+
+---
+
+## 🔥 Option 2: Deploy to Firebase
+
+### 1. One-time Firebase setup
+1. Create a Firebase project at [console.firebase.google.com](https://console.firebase.google.com) and note your **Project ID**.
+2. Upgrade to Blaze plan (free quota covers hackathon usage).
+3. Enable **Firestore Database** in production mode.
+4. Install Firebase CLI:
    ```powershell
    npm install -g firebase-tools
    firebase login
    ```
 
-## 1. Point this project at your Firebase project
-
-Edit `.firebaserc`:
+### 2. Configure `.firebaserc`
+Edit `.firebaserc` to specify your project ID:
 ```json
 {
-  "projects": { "default": "your-actual-project-id" }
+  "projects": { "default": "your-firebase-project-id" }
 }
 ```
 
-## 2. Install the Cloud Function's dependencies
-
+### 3. Install Function Dependencies & Deploy
 ```powershell
 cd functions
 npm install
 cd ..
-```
-
-## 3. (Recommended) Set a real JWT secret
-
-The function falls back to a dev secret. For anything beyond a quick demo,
-open `functions/index.js` and replace this fallback string with your own
-long random value:
-
-```js
-const SECRET = process.env.JWT_SECRET || 'credit-ledger-dev-secret-change-in-production';
-```
-
-## 4. Deploy
-
-```powershell
 firebase deploy
 ```
 
-First deploy takes a few minutes. At the end you'll get a live URL like:
+---
 
-```
-Hosting URL: https://your-project-id.web.app
-```
+## 💻 Local Development Server
 
-## 5. Log in
-
-- Officer Code: `DEMO001`
-- Password: `Demo@123`
-
-(Auto-created the first time anyone logs in.)
-
-## Redeploying after changes
-
-- Only `public/` changed → `firebase deploy --only hosting`
-- Only `functions/` changed → `firebase deploy --only functions`
-- Both → `firebase deploy`
-
-## Testing locally before deploying (optional)
+To run the local standalone dev server:
 
 ```powershell
-firebase emulators:start --only functions,hosting,firestore
+node server.js
 ```
-Then open the URL the CLI prints (usually `http://localhost:5000`). The very
-first run downloads a Firestore emulator `.jar` file — this needs normal
-internet access to `storage.googleapis.com`, so it should work fine on your
-own machine even though it couldn't be tested inside the sandbox this was
-built in.
-
-## Troubleshooting
-
-- **"Your project must be on the Blaze plan"** → finish step 0.2.
-- **Permission denied on Firestore** → make sure you created the database in
-  step 0.3 before deploying.
-- **Login works locally but not live** → check the browser console (F12) →
-  Network tab on the live site; the most common cause is `.firebaserc` still
-  pointing at the wrong project ID.
+Then open `http://localhost:3000` in your browser.
