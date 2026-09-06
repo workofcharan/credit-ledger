@@ -10,23 +10,45 @@ async function renderCompareView() {
   if (!wrap) return;
 
   const selection = getCompareSelection();
-  if (selection.length < 2) {
-    wrap.innerHTML = `
-      <div class="empty-state">
-        <div class="emoji">⚖️</div>
-        <h3>Select applicants to compare</h3>
-        <p>Please select 2 or 3 applicants from the <a href="/history.html">History</a> page to compare them side-by-side.</p>
-        <a href="/history.html" class="btn btn-primary btn-sm" style="margin-top:10px;">Go to History →</a>
-      </div>`;
-    return;
-  }
 
   try {
-    const details = await Promise.all(selection.map((id) => API.get(`/assessments/${id}`).catch(() => null)));
+    let details = [];
+    if (selection.length > 0) {
+      details = await Promise.all(selection.map((id) => API.get(`/assessments/${id}`).catch(() => null)));
+    }
     const validDetails = (details || []).filter(d => d && d.assessment && d.assessment.id);
 
+    // Synchronize and prune any stale/deleted IDs
+    if (validDetails.length !== selection.length) {
+      setCompareSelection(validDetails.map(d => d.assessment.id));
+    }
+
     if (validDetails.length < 2) {
-      wrap.innerHTML = `<div class="empty-state"><div class="emoji">⚠️</div><p>Some selected records could not be loaded. Please return to <a href="/history.html">History</a>.</p></div>`;
+      wrap.innerHTML = `
+        <div class="empty-state">
+          <div class="emoji">⚖️</div>
+          <h3>Select applicants to compare</h3>
+          <p>Please select 2 or 3 applicants from the <a href="/history.html">History</a> page to compare them side-by-side.</p>
+          <div style="display:flex; gap:12px; justify-content:center; margin-top:16px;">
+            <a href="/history.html" class="btn btn-primary btn-sm">Select from History →</a>
+            <button class="btn btn-outline btn-sm" id="autoCompareTopBtn">Auto-compare first 2 applicants</button>
+          </div>
+        </div>`;
+
+      document.getElementById('autoCompareTopBtn')?.addEventListener('click', async () => {
+        try {
+          const res = await API.get('/assessments');
+          const list = (res?.assessments || []).slice(0, 2);
+          if (list.length >= 2) {
+            setCompareSelection(list.map(a => a.id));
+            await renderCompareView();
+          } else {
+            showToast('Please create at least 2 assessments first.');
+          }
+        } catch {
+          showToast('Could not load assessments from history.');
+        }
+      });
       return;
     }
 
