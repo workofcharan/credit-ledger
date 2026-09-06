@@ -3,21 +3,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.js" },
-    { "source": "/api", "destination": "/api/index.js" },
-    { "source": "/dashboard", "destination": "/public/dashboard.html" },
-    { "source": "/new-assessment", "destination": "/public/new-assessment.html" },
-    { "source": "/review-queue", "destination": "/public/review-queue.html" },
-    { "source": "/history", "destination": "/public/history.html" },
-    { "source": "/report", "destination": "/public/report.html" },
-    { "source": "/compare", "destination": "/public/compare.html" },
-    { "source": "/login", "destination": "/public/login.html" },
-    { "source": "/register", "destination": "/public/register.html" },
-    { "source": "/about", "destination": "/public/about.html" },
-    { "source": "/help", "destination": "/public/help.html" },
-    { "source": "/privacy", "destination": "/public/privacy.html" },
-    { "source": "/", "destination": "/public/index.html" },
-    { "source": "/(.*)", "destination": "/public/$1" }
+    { "source": "/api/(.*)", "destination": "/api/[...slug]" }
   ],
   "headers": [
     {
