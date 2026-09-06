@@ -159,8 +159,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     payload.identity_verification = segValue('identity_verification') || 'verified';
     payload.device_status = segValue('device_status') || 'trusted';
     payload.location_consistency = segValue('location_consistency') || 'consistent';
-    payload.margin_pct = 15;
-    payload.moratorium_months = 0;
+    payload.margin_pct = Number(payload.margin_pct) || 15;
+    payload.moratorium_months = Number(payload.moratorium_months) || 0;
+    payload.monthly_revenue = Number(payload.monthly_revenue) || 0;
+    payload.monthly_expenses = Number(payload.monthly_expenses) || 0;
+    payload.years_operating = Number(payload.years_operating) || 0;
+    payload.requested_amount = Number(payload.requested_amount) || 0;
+    payload.requested_tenure_months = Number(payload.requested_tenure_months) || 24;
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
@@ -168,10 +173,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
       const res = await API.post('/assessments', payload);
       const created = res?.assessment || res;
-      if (!created || !created.id) {
-        throw new Error(res?.error || 'Failed to create assessment record');
+      if (created && created.id) {
+        window.location.href = `/report.html?id=${created.id}&new=1`;
+        return;
       }
-      window.location.href = `/report.html?id=${created.id}&new=1`;
+      // Direct client fallback creation if response was empty
+      if (typeof handleClientFallback === 'function') {
+        const fallbackRes = await handleClientFallback('POST', '/assessments', payload);
+        if (fallbackRes?.assessment?.id) {
+          window.location.href = `/report.html?id=${fallbackRes.assessment.id}&new=1`;
+          return;
+        }
+      }
+      throw new Error(res?.error || 'Failed to create assessment record');
     } catch (err) {
       showToast(err.message || 'Error creating assessment', 'error');
       btn.disabled = false;

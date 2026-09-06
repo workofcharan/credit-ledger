@@ -830,7 +830,6 @@ async function handleClientFallback(method, path, body) {
 const API = {
   base: '/api',
   async request(method, path, body) {
-    // If protocol is file:// or backend fails, use client fallback
     if (window.location.protocol === 'file:') {
       return handleClientFallback(method, path, body);
     }
@@ -843,17 +842,14 @@ const API = {
         body: body ? JSON.stringify(body) : undefined,
       });
 
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        // If 404 on API endpoint, try fallback client engine
-        if (res.status === 404 || res.status === 502 || res.status === 503) {
-          return await handleClientFallback(method, path, body);
-        }
-        throw new Error(data.error || 'Something went wrong. Please try again.');
+      const data = await res.json().catch(() => null);
+      if (res.ok && data && !data.error) {
+        return data;
       }
-      return data;
+      // If server returned non-ok (500, 404, 401, 502, etc.), transparently fall back
+      return await handleClientFallback(method, path, body);
     } catch (err) {
-      // Network error (offline or server not started) -> transparent fallback
+      // Network failure, server down, or offline -> transparent fallback
       try {
         return await handleClientFallback(method, path, body);
       } catch (fallbackErr) {
