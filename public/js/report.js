@@ -32,12 +32,41 @@ document.addEventListener('DOMContentLoaded', async () => {
       showToast('Assessment created successfully!');
     }
   } catch (err) {
+    let availableHtml = '';
+    try {
+      const listRes = await API.get('/assessments');
+      const list = (listRes?.assessments || []).filter(a => a && a.id);
+      if (list.length > 0) {
+        availableHtml = `
+          <div style="margin-top:20px; max-width:540px; margin-left:auto; margin-right:auto; text-align:left;">
+            <div style="font-size:13.5px; font-weight:600; color:var(--text-muted); margin-bottom:10px; text-align:center;">
+              Available Applications on File:
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              ${list.slice(0, 5).map(a => `
+                <a href="/report.html?id=${a.id}" class="card" style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; text-decoration:none; color:var(--text-main); border:1px solid var(--border); border-radius:8px;">
+                  <div>
+                    <strong>${escapeHtml(a.applicant_name)}</strong>
+                    <div style="font-size:12px; color:var(--text-muted);">${escapeHtml(a.business_name || (a.business_type || '').replace(/_/g, ' '))}</div>
+                  </div>
+                  <span class="band-pill band-${a.credit_band || 'A'}">Band ${a.credit_band || 'A'} →</span>
+                </a>
+              `).join('')}
+            </div>
+          </div>`;
+      }
+    } catch {}
+
     document.getElementById('reportRoot').innerHTML = `
       <div class="empty-state">
         <div class="emoji">⚠️</div>
         <h3>Unable to load report</h3>
         <p>${escapeHtml(err.message || 'The requested application could not be found.')}</p>
-        <a href="/history.html" class="btn btn-outline btn-sm" style="margin-top:10px;">Return to History</a>
+        <div style="display:flex; gap:12px; justify-content:center; margin-top:14px;">
+          <a href="/history.html" class="btn btn-primary btn-sm">View All in History →</a>
+          <a href="/new-assessment.html" class="btn btn-outline btn-sm">+ New Assessment</a>
+        </div>
+        ${availableHtml}
       </div>`;
   }
 });
