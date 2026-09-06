@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Officer Login — Explainable Credit Ledger</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="tricolor-bar"></div>
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-gov">
+      <svg class="emblem" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" stroke="#ff9933" stroke-width="1.6"/><path d="M12 5v14M6 8l12 8M18 8L6 16" stroke="#dfe6f2" stroke-width="1.1"/></svg>
+      <div class="lines"><strong>Smart India Hackathon 2026</strong><span>Explainable Credit Ledger — government-format prototype portal</span></div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a href="/index.html" class="brand"><span class="badge">ECL</span><span class="brand-text"><span class="name">Explainable Credit Ledger</span><span class="sub">AI Fraud Detection &amp; Explainable Credit Scoring</span></span></a>
+    <nav class="main-nav"><a href="/index.html">Home</a><a href="/about.html">About</a><a href="/help.html">Help</a></nav>
+  </div>
+</header>
+
+<main id="main" class="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-emblem"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#0b2038" stroke-width="1.6"/><path d="M12 5v14M6 8l12 8M18 8L6 16" stroke="#0f9488" stroke-width="1.2"/></svg></div>
+    <h1>Officer Login</h1>
+    <p class="sub">Sign in to access the dashboard</p>
+
+    <div class="demo-hint" id="demoHint" style="cursor:pointer;" title="Click to autofill demo credentials">
+      <strong>Demo access:</strong> Officer Code: <code>DEMO001</code> · Password: <code>Demo@123</code>
+      <div style="font-size:11.5px; margin-top:4px; text-decoration:underline;">Click here to autofill credentials</div>
+    </div>
+    <div class="error-banner" id="errorBanner"></div>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="officer_code">Officer Code</label>
+        <input type="text" id="officer_code" autocomplete="username" value="DEMO001" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" autocomplete="current-password" value="Demo@123" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="submitBtn"><span>Log In to Dashboard</span></button>
+    </form>
+
+    <div class="auth-switch">New field officer? <a href="/register.html">Register here</a></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><strong>Explainable Credit Ledger</strong></div>
+    <div>This is a hackathon prototype and is not an official Government of India service.</div>
+  </div>
+</footer>
+
+<script src="/js/api.js"></script>
+<script>
+const demoHint = document.getElementById('demoHint');
+if (demoHint) {
+  demoHint.addEventListener('click', () => {
+    document.getElementById('officer_code').value = 'DEMO001';
+    document.getElementById('password').value = 'Demo@123';
+    showToast('Demo credentials filled!');
+  });
+}
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const banner = document.getElementById('errorBanner');
+  banner.classList.remove('show');
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  try {
+    const officer_code = document.getElementById('officer_code').value;
+    const password = document.getElementById('password').value;
+    await API.post('/auth/login', { officer_code, password });
+    window.location.href = '/dashboard.html';
+  } catch (err) {
+    banner.textContent = err.message;
+    banner.classList.add('show');
+  } finally {
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>

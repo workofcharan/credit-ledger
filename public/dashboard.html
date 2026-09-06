@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Explainable Credit Ledger</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="tricolor-bar"></div>
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-gov">
+      <svg class="emblem" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" stroke="#ff9933" stroke-width="1.6"/><path d="M12 5v14M6 8l12 8M18 8L6 16" stroke="#dfe6f2" stroke-width="1.1"/></svg>
+      <div class="lines"><strong>Smart India Hackathon 2026</strong><span>Explainable Credit Ledger — government-format prototype portal</span></div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a href="/index.html" class="brand"><span class="badge">ECL</span><span class="brand-text"><span class="name">Explainable Credit Ledger</span><span class="sub">AI Fraud Detection &amp; Explainable Credit Scoring</span></span></a>
+    <nav class="main-nav">
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/new-assessment.html">New Assessment</a>
+      <a href="/review-queue.html">Review Queue <span class="queue-badge" id="queueBadge" style="display:none;">0</span></a>
+      <a href="/history.html">History</a>
+      <a href="/compare.html">Compare</a>
+      <span class="officer-chip"><span class="avatar" id="avatarInitial">?</span><span id="officerName">…</span></span>
+      <button class="nav-link" id="logoutBtn">Log Out</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container" style="padding-top:32px; padding-bottom:64px;">
+    <h1 style="font-size:24px; margin-bottom:4px;">Smart Dashboard</h1>
+    <p style="color:var(--text-muted); margin-bottom:26px;">A live view of scoring outcomes and what still needs officer attention.</p>
+
+    <div class="kpi-strip" id="kpiStrip">
+      <div class="kpi-card"><div class="label">Total Applications</div><div class="value">—</div></div>
+      <div class="kpi-card good"><div class="label">Auto-Approved</div><div class="value">—</div></div>
+      <div class="kpi-card warn"><div class="label">Pending Review</div><div class="value">—</div></div>
+      <div class="kpi-card danger"><div class="label">High Fraud Risk</div><div class="value">—</div></div>
+      <div class="kpi-card"><div class="label">Officer Declines</div><div class="value">—</div></div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="section-card" style="margin-bottom:0;">
+        <h2 style="font-size:16px;">Recommendation Breakdown</h2>
+        <p class="desc">What the system recommended before any officer action.</p>
+        <canvas id="recChart" height="220"></canvas>
+      </div>
+      <div class="section-card" style="margin-bottom:0;">
+        <h2 style="font-size:16px;">Fraud Risk Distribution</h2>
+        <p class="desc">Across all applications on file.</p>
+        <canvas id="fraudChart" height="220"></canvas>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h2 style="font-size:16px;">Credit Band Distribution</h2>
+      <canvas id="creditChart" height="90"></canvas>
+    </div>
+
+    <div class="section-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="font-size:16px; margin-bottom:0;">Recent Applications</h2>
+        <a href="/history.html" class="btn btn-outline btn-sm">View all history →</a>
+      </div>
+      <div id="recentTableWrap" style="margin-top:14px;"><p>Loading…</p></div>
+    </div>
+
+    <div class="section-card" style="margin-bottom:0;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="font-size:16px; margin-bottom:0;">Needs Officer Review</h2>
+        <a href="/review-queue.html" class="btn btn-outline btn-sm">Go to review queue →</a>
+      </div>
+      <div id="pendingPreviewWrap" style="margin-top:14px;"><p>Loading…</p></div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><strong>Explainable Credit Ledger</strong></div>
+    <div>This is a hackathon prototype and is not an official Government of India service.</div>
+  </div>
+</footer>
+
+<script src="/js/api.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

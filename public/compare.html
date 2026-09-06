@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compare — Explainable Credit Ledger</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="tricolor-bar"></div>
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-gov">
+      <svg class="emblem" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" stroke="#ff9933" stroke-width="1.6"/><path d="M12 5v14M6 8l12 8M18 8L6 16" stroke="#dfe6f2" stroke-width="1.1"/></svg>
+      <div class="lines"><strong>Smart India Hackathon 2026</strong><span>Explainable Credit Ledger — government-format prototype portal</span></div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a href="/index.html" class="brand"><span class="badge">ECL</span><span class="brand-text"><span class="name">Explainable Credit Ledger</span><span class="sub">AI Fraud Detection &amp; Explainable Credit Scoring</span></span></a>
+    <nav class="main-nav">
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/new-assessment.html">New Assessment</a>
+      <a href="/review-queue.html">Review Queue</a>
+      <a href="/history.html">History</a>
+      <a href="/compare.html" aria-current="page">Compare</a>
+      <span class="officer-chip"><span class="avatar" id="avatarInitial">?</span><span id="officerName">…</span></span>
+      <button class="nav-link" id="logoutBtn">Log Out</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container" style="padding-top:32px; padding-bottom:64px;">
+    <div class="breadcrumb"><a href="/dashboard.html">Dashboard</a> / Compare</div>
+    <h1 style="font-size:24px; margin-bottom:4px;">Compare Applicants</h1>
+    <p style="color:var(--text-muted); margin-bottom:26px;">Selections are made from <a href="/history.html">History</a>.</p>
+    <div id="compareContent"><p>Loading…</p></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container"><div><strong>Explainable Credit Ledger</strong></div><div>This is a hackathon prototype and is not an official Government of India service.</div></div>
+</footer>
+
+<script src="/js/api.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/compare.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // The browser never talks to Firestore directly — only the Cloud
+    // Function does, via the Admin SDK, which bypasses these rules.
+    // So client access stays fully locked down.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

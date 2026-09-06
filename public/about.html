@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Explainable Credit Ledger</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="tricolor-bar"></div>
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-gov">
+      <svg class="emblem" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" stroke="#ff9933" stroke-width="1.6"/><path d="M12 5v14M6 8l12 8M18 8L6 16" stroke="#dfe6f2" stroke-width="1.1"/></svg>
+      <div class="lines"><strong>Smart India Hackathon 2026</strong><span>Explainable Credit Ledger — government-format prototype portal</span></div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a href="/index.html" class="brand"><span class="badge">ECL</span><span class="brand-text"><span class="name">Explainable Credit Ledger</span><span class="sub">AI Fraud Detection &amp; Explainable Credit Scoring</span></span></a>
+    <nav class="main-nav">
+      <a href="/index.html">Home</a>
+      <a href="/about.html" aria-current="page">About</a>
+      <a href="/help.html">Help</a>
+      <a href="/login.html" class="btn btn-primary">Officer Login</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container content-page">
+    <div class="breadcrumb"><a href="/index.html">Home</a> / About</div>
+    <h1>About the Explainable Credit Ledger</h1>
+    <p>Most alternative-credit tools for underserved applicants — gig workers, micro-entrepreneurs, first-time borrowers — collapse two very different questions into one score: <em>can this person repay?</em> and <em>is this application genuine?</em> When those get blended, a thin credit history and an actual fraud attempt can end up looking the same to the model, and the person who suffers is usually the genuine applicant with limited paperwork, not the fraudster.</p>
+    <p>This system keeps the two questions separate end to end.</p>
+
+    <h2>1. Credit score — repayment capacity</h2>
+    <p>A transparent, rule-based score out of 100, built from six factors: monthly cash-flow surplus, business stability (years operating and sector), repayment history, digital payment adoption, savings discipline, and household/existing-debt load. Each factor shows its exact contribution and the numbers behind it, so an officer can explain the score to the applicant on the spot — nothing is a black box.</p>
+
+    <h2>2. Fraud score — application integrity</h2>
+    <p>A separate score, also out of 100, built from identity verification match, device reputation, location consistency between the declared address and verified signals, the variance between self-declared and documented income, reference/co-signer checks, and a repeat-application check across the whole system (not just one officer's cases) to catch the same identity applying multiple times in a short window.</p>
+
+    <h2>3. Decision logic — no automated rejections</h2>
+    <p>The system has exactly one automated power: approval. An application is auto-approved only when both scores are clean. Every other outcome — a borderline credit score, a noisy fraud signal, or even a high fraud-risk flag — is <strong>referred to a human officer</strong> with a full explanation and a non-binding recommendation. A decline can only be entered by an officer, with a written note, creating an audit trail. This is the core protection for genuine applicants: no one is silently rejected by the algorithm.</p>
+
+    <h2>4. Financial structuring</h2>
+    <p>For applications heading toward approval, the system also builds an editable EMI amortisation schedule (with an optional interest-only moratorium period) and a break-even view based on the business's own margin — so a recommended loan comes with a repayment plan sized to what the business can actually sustain, not just a lump-sum number.</p>
+
+    <h2>Status</h2>
+    <p>This is a working prototype built for Smart India Hackathon 2026. The scoring logic is intentionally rule-based and fully transparent for this stage; a production deployment could layer a validated ML model underneath while keeping the same explanation and human-review guarantees on top.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><strong>Explainable Credit Ledger</strong><br>Built for Smart India Hackathon 2026 · <a href="/about.html" style="color:#cfd8e6;">About</a> · <a href="/help.html" style="color:#cfd8e6;">Help</a> · <a href="/privacy.html" style="color:#cfd8e6;">Privacy &amp; Data Use</a></div>
+    <div>This is a hackathon prototype and is not an official Government of India service.</div>
+  </div>
+</footer>
+</body>
+</html>

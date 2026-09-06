@@ -1,0 +1,13 @@
+{
+  "name": "credit-ledger",
+  "version": "1.0.0",
+  "description": "Explainable Credit Ledger — AI-Powered Fraud Detection & Explainable Credit Scoring (Smart India Hackathon 2026)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["credit-scoring", "fraud-detection", "fintech", "sih2026"],
+  "author": "Credit Ledger Team",
+  "license": "ISC"
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help &amp; FAQ — Explainable Credit Ledger</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="tricolor-bar"></div>
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-gov">
+      <svg class="emblem" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" stroke="#ff9933" stroke-width="1.6"/><path d="M12 5v14M6 8l12 8M18 8L6 16" stroke="#dfe6f2" stroke-width="1.1"/></svg>
+      <div class="lines"><strong>Smart India Hackathon 2026</strong><span>Explainable Credit Ledger — government-format prototype portal</span></div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a href="/index.html" class="brand"><span class="badge">ECL</span><span class="brand-text"><span class="name">Explainable Credit Ledger</span><span class="sub">AI Fraud Detection &amp; Explainable Credit Scoring</span></span></a>
+    <nav class="main-nav">
+      <a href="/index.html">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/help.html" aria-current="page">Help</a>
+      <a href="/login.html" class="btn btn-primary">Officer Login</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container content-page">
+    <div class="breadcrumb"><a href="/index.html">Home</a> / Help</div>
+    <h1>Help &amp; FAQ</h1>
+
+    <h2>How do I get access?</h2>
+    <p>Officers log in with an officer code issued by their branch or district office. If you're new, use <a href="/register.html">Register here</a> from the login page to create an account. For this demo, a shared demo account is available: Officer Code <strong>DEMO001</strong>, Password <strong>Demo@123</strong>.</p>
+
+    <h2>Why was an application referred instead of approved or declined?</h2>
+    <p>The system never issues an automatic decline. Anything that isn't a clean auto-approval — a borderline credit score, an unverifiable reference, a flagged device — is sent to the <a href="/review-queue.html">Review Queue</a> with a full explanation and a recommendation. An officer makes the final call.</p>
+
+    <h2>What's the difference between the credit score and the fraud score?</h2>
+    <p>The credit score answers "can they repay?" — it's about cash flow and business stability. The fraud score answers "is this application genuine?" — identity match, device, location, and repeat-application signals. They're intentionally kept separate; see the <a href="/about.html">About</a> page for the full methodology.</p>
+
+    <h2>Can I change a decision after it's been made?</h2>
+    <p>Auto-approved and officer-finalised cases are kept as a permanent audit record on the <a href="/history.html">History</a> page. If you need to correct one, submit a fresh assessment and note the correction in the decision note field.</p>
+
+    <h2>How do I compare two applicants?</h2>
+    <p>From the <a href="/history.html">History</a> page, tick the checkbox next to up to three applicants, then open the <a href="/compare.html">Compare</a> page.</p>
+
+    <h2>How do I get a PDF of a report?</h2>
+    <p>Open any application's report page and use the <strong>Download PDF Report</strong> button in the top right — it generates a real, multi-page PDF you can save or print, not just a browser print dialog.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><strong>Explainable Credit Ledger</strong><br>Built for Smart India Hackathon 2026 · <a href="/about.html" style="color:#cfd8e6;">About</a> · <a href="/help.html" style="color:#cfd8e6;">Help</a> · <a href="/privacy.html" style="color:#cfd8e6;">Privacy &amp; Data Use</a></div>
+    <div>This is a hackathon prototype and is not an official Government of India service.</div>
+  </div>
+</footer>
+</body>
+</html>

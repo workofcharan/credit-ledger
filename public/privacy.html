@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy &amp; Data Use — Explainable Credit Ledger</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="tricolor-bar"></div>
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-gov">
+      <svg class="emblem" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" stroke="#ff9933" stroke-width="1.6"/><path d="M12 5v14M6 8l12 8M18 8L6 16" stroke="#dfe6f2" stroke-width="1.1"/></svg>
+      <div class="lines"><strong>Smart India Hackathon 2026</strong><span>Explainable Credit Ledger — government-format prototype portal</span></div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a href="/index.html" class="brand"><span class="badge">ECL</span><span class="brand-text"><span class="name">Explainable Credit Ledger</span><span class="sub">AI Fraud Detection &amp; Explainable Credit Scoring</span></span></a>
+    <nav class="main-nav">
+      <a href="/index.html">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/help.html">Help</a>
+      <a href="/login.html" class="btn btn-primary">Officer Login</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container content-page">
+    <div class="breadcrumb"><a href="/index.html">Home</a> / Privacy &amp; Data Use</div>
+    <h1>Privacy &amp; Data Use</h1>
+    <p>This is a hackathon prototype built for Smart India Hackathon 2026. It is not an official Government of India service, and no real applicant data should be entered into this demo instance.</p>
+
+    <h2>What's stored</h2>
+    <p>Officer accounts (name, officer code, branch, a hashed password) and submitted applications (business and cash-flow details, the identity/fraud signals entered by the officer, and the generated scores and decisions) are stored in a Firestore database associated with this deployment.</p>
+
+    <h2>Who can see it</h2>
+    <p>Only authenticated officers, through this application's API — there is no public or client-side access to the underlying database. All decline decisions carry the name of the officer who made them, for audit purposes.</p>
+
+    <h2>Sensitive identifiers</h2>
+    <p>The "Applicant ID / Phone Reference" field exists only to detect repeat applications from the same identity across the system. For this demo, do not enter real Aadhaar, PAN, or other government ID numbers — use a placeholder reference instead.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this prototype can be directed to the project team listed in the Smart India Hackathon 2026 submission materials.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><strong>Explainable Credit Ledger</strong><br>Built for Smart India Hackathon 2026 · <a href="/about.html" style="color:#cfd8e6;">About</a> · <a href="/help.html" style="color:#cfd8e6;">Help</a> · <a href="/privacy.html" style="color:#cfd8e6;">Privacy &amp; Data Use</a></div>
+    <div>This is a hackathon prototype and is not an official Government of India service.</div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Assessment — Explainable Credit Ledger</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="tricolor-bar"></div>
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-gov">
+      <svg class="emblem" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" stroke="#ff9933" stroke-width="1.6"/><path d="M12 5v14M6 8l12 8M18 8L6 16" stroke="#dfe6f2" stroke-width="1.1"/></svg>
+      <div class="lines"><strong>Smart India Hackathon 2026</strong><span>Explainable Credit Ledger — government-format prototype portal</span></div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a href="/index.html" class="brand"><span class="badge">ECL</span><span class="brand-text"><span class="name">Explainable Credit Ledger</span><span class="sub">AI Fraud Detection &amp; Explainable Credit Scoring</span></span></a>
+    <nav class="main-nav">
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/new-assessment.html" aria-current="page">New Assessment</a>
+      <a href="/review-queue.html">Review Queue</a>
+      <a href="/history.html">History</a>
+      <a href="/compare.html">Compare</a>
+      <span class="officer-chip"><span class="avatar" id="avatarInitial">?</span><span id="officerName">…</span></span>
+      <button class="nav-link" id="logoutBtn">Log Out</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container" style="padding-top:32px; padding-bottom:64px;">
+    <div class="breadcrumb"><a href="/dashboard.html">Dashboard</a> / New Assessment</div>
+    <h1 style="font-size:24px; margin-bottom:4px;">New Assessment</h1>
+    <p style="color:var(--text-muted); margin-bottom:16px;">Two independent scores will be generated: repayment capacity and fraud risk. Neither can auto-reject on its own.</p>
+
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:16px 20px; margin-bottom:24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div>
+        <strong style="font-size:13.5px; color:var(--navy-900);">✨ Quick Load Demo Profiles:</strong>
+        <span style="font-size:13px; color:var(--text-muted); margin-left:6px;">Prefill the form with verified sample cases</span>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button type="button" class="btn btn-outline btn-sm" id="loadCleanBtn">Clean Kirana (Auto-Approve)</button>
+        <button type="button" class="btn btn-outline btn-sm" id="loadThinFileBtn">Thin-File Artisan (Alt-Data)</button>
+        <button type="button" class="btn btn-outline btn-sm" id="loadFraudBtn">High Fraud Risk (Flagged)</button>
+      </div>
+    </div>
+
+    <form id="assessForm" class="form-card">
+      <h3 class="form-section-title">Applicant Details</h3>
+      <div class="form-grid">
+        <div class="field"><label>Applicant Full Name</label><input type="text" name="applicant_name" required></div>
+        <div class="field"><label>Business Name</label><input type="text" name="business_name"></div>
+        <div class="field"><label>Village / Locality</label><input type="text" name="village"></div>
+        <div class="field"><label>District</label><input type="text" name="district"></div>
+        <div class="field"><label>State</label><input type="text" name="state" value="Telangana"></div>
+      </div>
+
+      <h3 class="form-section-title">Business Profile</h3>
+      <div class="form-grid">
+        <div class="field">
+          <label>Business Type</label>
+          <select name="business_type" required>
+            <option value="kirana_store">Kirana / General Store</option>
+            <option value="dairy">Dairy</option>
+            <option value="tailoring">Tailoring</option>
+            <option value="handicraft">Handicraft / Artisan</option>
+            <option value="agri_input">Agri-Input Shop</option>
+            <option value="poultry">Poultry / Livestock</option>
+            <option value="street_vendor">Street Vendor</option>
+            <option value="repair_services">Repair Services</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field"><label>Years in Operation</label><input type="number" name="years_operating" min="0" step="0.5" value="2" required></div>
+      </div>
+
+      <h3 class="form-section-title">Monthly Cash Flow</h3>
+      <div class="form-grid">
+        <div class="field"><label>Average Monthly Revenue (₹)</label><input type="number" name="monthly_revenue" min="0" required></div>
+        <div class="field"><label>Average Monthly Expenses (₹)</label><input type="number" name="monthly_expenses" min="0" required></div>
+        <div class="field"><label>Digital Payments Share (%)</label><input type="number" name="digital_payment_pct" min="0" max="100" value="30"></div>
+        <div class="field"><label>Savings Rate (% of surplus)</label><input type="number" name="savings_ratio" min="0" max="100" value="20"></div>
+      </div>
+
+      <h3 class="form-section-title">Credit Background</h3>
+      <div class="form-grid">
+        <div class="field">
+          <label>Existing Loan?</label>
+          <div class="segmented" data-name="existing_loan">
+            <button type="button" class="seg-btn" data-value="yes">Yes</button>
+            <button type="button" class="seg-btn active" data-value="no">No</button>
+          </div>
+        </div>
+        <div class="field"><label>Existing Loan Outstanding (₹)</label><input type="number" name="existing_loan_amount" min="0" value="0"></div>
+        <div class="field">
+          <label>Repayment History</label>
+          <select name="repayment_history">
+            <option value="none">No prior credit</option>
+            <option value="good">Good</option>
+            <option value="average">Average</option>
+            <option value="poor">Poor</option>
+          </select>
+        </div>
+        <div class="field"><label>Number of Dependents</label><input type="number" name="dependents" min="0" value="2"></div>
+      </div>
+
+      <h3 class="form-section-title">Identity &amp; Fraud Signals</h3>
+      <div class="form-grid">
+        <div class="field full" style="grid-column:1/-1;">
+          <label>Applicant ID / Phone Reference <span style="font-weight:400; color:var(--text-faint);">(used only to detect repeat applications — do not enter real government ID numbers in this demo)</span></label>
+          <input type="text" name="id_reference" placeholder="e.g. phone number or reference code">
+        </div>
+        <div class="field">
+          <label>Identity Verification</label>
+          <div class="segmented" data-name="identity_verification">
+            <button type="button" class="seg-btn active" data-value="verified">Verified</button>
+            <button type="button" class="seg-btn" data-value="partial">Partial Match</button>
+            <button type="button" class="seg-btn" data-value="mismatch">Mismatch</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Device Reputation</label>
+          <div class="segmented" data-name="device_status">
+            <button type="button" class="seg-btn active" data-value="trusted">Trusted</button>
+            <button type="button" class="seg-btn" data-value="new">New Device</button>
+            <button type="button" class="seg-btn" data-value="flagged">Flagged</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Location Consistency</label>
+          <div class="segmented" data-name="location_consistency">
+            <button type="button" class="seg-btn active" data-value="consistent">Consistent</button>
+            <button type="button" class="seg-btn" data-value="inconsistent">Inconsistent</button>
+          </div>
+        </div>
+        <div class="field"><label>Declared vs. Verified Income Variance (%)</label><input type="number" name="income_doc_variance_pct" min="0" max="100" value="5"></div>
+        <div class="field">
+          <label>Reference / Co-signer Check</label>
+          <select name="reference_check">
+            <option value="verified">Verified</option>
+            <option value="unverifiable">Unverifiable</option>
+            <option value="conflicting">Conflicting</option>
+          </select>
+        </div>
+      </div>
+
+      <h3 class="form-section-title">Loan Request</h3>
+      <div class="form-grid">
+        <div class="field"><label>Requested Amount (₹)</label><input type="number" name="requested_amount" min="0" value="50000"></div>
+        <div class="field"><label>Requested Tenure (months)</label><input type="number" name="requested_tenure_months" min="3" max="120" value="24"></div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-outline" id="resetFormBtn">Clear Form</button>
+        <button type="submit" class="btn btn-primary" id="submitBtn"><span>Generate Assessment</span></button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container"><div><strong>Explainable Credit Ledger</strong></div><div>This is a hackathon prototype and is not an official Government of India service.</div></div>
+</footer>
+
+<script src="/js/api.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/new-assessment.js"></script>
+</body>
+</html>

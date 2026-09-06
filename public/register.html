@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Officer Registration — Explainable Credit Ledger</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="tricolor-bar"></div>
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-gov">
+      <svg class="emblem" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" stroke="#ff9933" stroke-width="1.6"/><path d="M12 5v14M6 8l12 8M18 8L6 16" stroke="#dfe6f2" stroke-width="1.1"/></svg>
+      <div class="lines"><strong>Smart India Hackathon 2026</strong><span>Explainable Credit Ledger — government-format prototype portal</span></div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a href="/index.html" class="brand"><span class="badge">ECL</span><span class="brand-text"><span class="name">Explainable Credit Ledger</span><span class="sub">AI Fraud Detection &amp; Explainable Credit Scoring</span></span></a>
+    <nav class="main-nav"><a href="/index.html">Home</a><a href="/about.html">About</a><a href="/help.html">Help</a></nav>
+  </div>
+</header>
+
+<main id="main" class="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-emblem"><svg width="34" height="34" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#0b2038" stroke-width="1.6"/><path d="M12 5v14M6 8l12 8M18 8L6 16" stroke="#0f9488" stroke-width="1.2"/></svg></div>
+    <h1>Officer Registration</h1>
+    <p class="sub">Create your credit officer account</p>
+
+    <div class="error-banner" id="errorBanner"></div>
+
+    <form id="registerForm">
+      <div class="field">
+        <label for="full_name">Full Name</label>
+        <input type="text" id="full_name" required>
+      </div>
+      <div class="field">
+        <label for="officer_code">Choose an Officer Code</label>
+        <input type="text" id="officer_code" required>
+      </div>
+      <div class="field">
+        <label for="branch">Branch / District</label>
+        <input type="text" id="branch">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" minlength="6" required>
+        <div class="hint">Minimum 6 characters</div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="submitBtn"><span>Create Account</span></button>
+    </form>
+
+    <div class="auth-switch">Already registered? <a href="/login.html">Log in</a></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><strong>Explainable Credit Ledger</strong></div>
+    <div>This is a hackathon prototype and is not an official Government of India service.</div>
+  </div>
+</footer>
+
+<script src="/js/api.js"></script>
+<script>
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const banner = document.getElementById('errorBanner');
+  banner.classList.remove('show');
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  try {
+    const payload = {
+      full_name: document.getElementById('full_name').value,
+      officer_code: document.getElementById('officer_code').value,
+      branch: document.getElementById('branch').value,
+      password: document.getElementById('password').value,
+    };
+    await API.post('/auth/register', payload);
+    window.location.href = '/dashboard.html';
+  } catch (err) {
+    banner.textContent = err.message;
+    banner.classList.add('show');
+  } finally {
+    btn.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
