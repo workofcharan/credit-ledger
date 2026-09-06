@@ -166,10 +166,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span> <span>Generating Assessment...</span>';
     try {
-      const { assessment } = await API.post('/assessments', payload);
-      window.location.href = `/report.html?id=${assessment.id}&new=1`;
+      const res = await API.post('/assessments', payload);
+      const created = res?.assessment || res;
+      if (!created || !created.id) {
+        throw new Error(res?.error || 'Failed to create assessment record');
+      }
+      window.location.href = `/report.html?id=${created.id}&new=1`;
     } catch (err) {
-      showToast(err.message, 'error');
+      showToast(err.message || 'Error creating assessment', 'error');
       btn.disabled = false;
       btn.innerHTML = '<span>Generate Assessment</span>';
     }

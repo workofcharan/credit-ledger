@@ -22,8 +22,8 @@ async function renderCompareView() {
   }
 
   try {
-    const details = await Promise.all(selection.map((id) => API.get(`/assessments/${id}`)));
-    const validDetails = details.filter(d => d && d.assessment);
+    const details = await Promise.all(selection.map((id) => API.get(`/assessments/${id}`).catch(() => null)));
+    const validDetails = (details || []).filter(d => d && d.assessment && d.assessment.id);
 
     if (validDetails.length < 2) {
       wrap.innerHTML = `<div class="empty-state"><div class="emoji">⚠️</div><p>Some selected records could not be loaded. Please return to <a href="/history.html">History</a>.</p></div>`;

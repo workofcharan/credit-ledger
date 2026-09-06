@@ -21,9 +21,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
-    const { assessment, result } = await API.get(`/assessments/${id}`);
-    ASSESSMENT = assessment;
-    RESULT = result;
+    const res = await API.get(`/assessments/${id}`);
+    if (!res || !res.assessment || !res.assessment.id) {
+      throw new Error(res?.error || 'Assessment report not found');
+    }
+    ASSESSMENT = res.assessment;
+    RESULT = res.result || {};
     render();
     if (isNew) {
       showToast('Assessment created successfully!');
@@ -33,7 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div class="empty-state">
         <div class="emoji">⚠️</div>
         <h3>Unable to load report</h3>
-        <p>${escapeHtml(err.message)}</p>
+        <p>${escapeHtml(err.message || 'The requested application could not be found.')}</p>
         <a href="/history.html" class="btn btn-outline btn-sm" style="margin-top:10px;">Return to History</a>
       </div>`;
   }

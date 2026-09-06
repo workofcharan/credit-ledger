@@ -301,10 +301,16 @@ module.exports = async function handler(req, res) {
     }
 
     const dataStore = loadDb();
+    const fallbackOfficer = (dataStore.officers && dataStore.officers[0]) || {
+      id: 'off_demo_001',
+      full_name: 'Demo Credit Officer',
+      officer_code: 'DEMO001',
+      branch: 'Central Processing Unit'
+    };
     const cookies = parseCookies(req);
     const token = cookies.token || (req.headers.authorization || '').replace('Bearer ', '');
-    const currentOfficer = sessions.get(token) || (token === 'demo_token' ? dataStore.officers[0] : null);
-    const officer = currentOfficer || dataStore.officers[0];
+    const currentOfficer = sessions.get(token) || (token === 'demo_token' ? fallbackOfficer : null);
+    const officer = currentOfficer || fallbackOfficer;
 
     // Auth routes
     if (apiPath === '/auth/login' && req.method === 'POST') {
