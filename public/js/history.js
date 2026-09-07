@@ -10,6 +10,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (searchInput) searchInput.addEventListener('input', renderHistoryList);
   if (statusFilter) statusFilter.addEventListener('change', renderHistoryList);
 
+  const goToCompareBtn = document.getElementById('goToCompareBtn');
+  if (goToCompareBtn) {
+    goToCompareBtn.addEventListener('click', (e) => {
+      const sel = getCompareSelection();
+      if (sel.length === 0) {
+        showToast('No applicants selected — opening default comparison.', 'info');
+        window.location.href = '/compare.html';
+      } else {
+        window.location.href = `/compare.html?ids=${sel.join(',')}`;
+      }
+      e.preventDefault();
+    });
+  }
+
   await loadHistory();
 });
 
@@ -28,7 +42,8 @@ function updateCompareBtnBadge() {
   const btn = document.getElementById('goToCompareBtn');
   if (!btn) return;
   const sel = getCompareSelection();
-  btn.textContent = `Compare Selected (${sel.length})`;
+  btn.textContent = `⚖️ Compare Selected (${sel.length})`;
+  btn.href = sel.length > 0 ? `/compare.html?ids=${sel.join(',')}` : '/compare.html';
   if (sel.length >= 2) {
     btn.classList.remove('btn-outline');
     btn.classList.add('btn-primary');
@@ -86,10 +101,17 @@ function renderHistoryList() {
   const selection = getCompareSelection();
 
   wrap.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size:13px; color:var(--text-muted);">
+      <div>Showing <strong>${filtered.length}</strong> record(s)</div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn-ghost btn-sm" id="selectTop3Btn" style="cursor:pointer;">Select First 3</button>
+        <button class="btn-ghost btn-sm" id="clearCompareBtn" style="cursor:pointer;">Clear Selected (${selection.length})</button>
+      </div>
+    </div>
     <table class="hist-table">
       <thead>
         <tr>
-          <th style="width:40px;">Compare</th>
+          <th style="width:40px; text-align:center;">Compare</th>
           <th>Applicant &amp; Business</th>
           <th>Location</th>
           <th>Credit Band</th>
@@ -101,8 +123,8 @@ function renderHistoryList() {
       </thead>
       <tbody>
         ${filtered.map((a) => `
-          <tr>
-            <td>
+          <tr class="${selection.includes(a.id) ? 'row-selected' : ''}">
+            <td style="text-align:center;">
               <input type="checkbox" class="compare-check" data-id="${a.id}" ${selection.includes(a.id) ? 'checked' : ''} title="Select to compare">
             </td>
             <td>
@@ -115,6 +137,7 @@ function renderHistoryList() {
             <td>${statusLabel(a)}</td>
             <td style="font-size:13px; color:var(--text-muted);">${new Date(a.created_at).toLocaleDateString('en-IN')}</td>
             <td style="text-align:right;" class="row-actions">
+              <button class="btn btn-outline btn-sm row-compare-btn" data-compare-id="${a.id}" title="Compare this applicant">⚖️ Compare</button>
               <a class="btn btn-outline btn-sm" href="/report.html?id=${a.id}">View</a>
               <button class="btn btn-danger btn-sm" data-del-id="${a.id}">Delete</button>
             </td>
@@ -122,6 +145,7 @@ function renderHistoryList() {
       </tbody>
     </table>`;
 
+  // Checkbox selection listeners
   wrap.querySelectorAll('.compare-check').forEach((cb) => {
     cb.addEventListener('change', () => {
       let sel = getCompareSelection();
@@ -137,9 +161,42 @@ function renderHistoryList() {
       }
       setCompareSelection(sel);
       updateCompareBtnBadge();
+      renderHistoryList();
     });
   });
 
+  // Row compare button: single click quick compare
+  wrap.querySelectorAll('.row-compare-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.compareId;
+      let sel = getCompareSelection();
+      if (!sel.includes(id)) {
+        if (sel.length >= 3) {
+          sel.pop();
+        }
+        sel.push(id);
+        setCompareSelection(sel);
+      }
+      window.location.href = `/compare.html?ids=${sel.join(',')}`;
+    });
+  });
+
+  // Toolbar action: Select top 3
+  document.getElementById('selectTop3Btn')?.addEventListener('click', () => {
+    const top3 = filtered.slice(0, 3).map(a => a.id);
+    setCompareSelection(top3);
+    showToast(`Selected top ${top3.length} applicants for comparison.`);
+    renderHistoryList();
+  });
+
+  // Toolbar action: Clear selected
+  document.getElementById('clearCompareBtn')?.addEventListener('click', () => {
+    setCompareSelection([]);
+    showToast('Cleared compare selection.');
+    renderHistoryList();
+  });
+
+  // Delete button listener
   wrap.querySelectorAll('[data-del-id]').forEach((btn) => {
     btn.addEventListener('click', async () => {
       if (!confirm('Are you sure you want to delete this assessment record?')) return;

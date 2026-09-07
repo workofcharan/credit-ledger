@@ -45,10 +45,10 @@ async function updateNavBadge() {
 }
 
 function markActiveNav() {
-  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  const currentPath = (window.location.pathname.split('/').pop() || 'index.html').replace('.html', '');
   document.querySelectorAll('.main-nav a[href]').forEach((a) => {
-    const target = a.getAttribute('href').split('/').pop();
-    if (target === currentPath || (currentPath === '' && target === 'index.html')) {
+    const target = a.getAttribute('href').split('/').pop().replace('.html', '');
+    if (target === currentPath || (currentPath === '' && (target === 'index' || target === ''))) {
       a.setAttribute('aria-current', 'page');
       a.classList.add('active');
     } else {
@@ -102,8 +102,47 @@ function statusLabel(r) {
 
 /* Compare selection persistence in localStorage */
 function getCompareSelection() {
-  try { return JSON.parse(localStorage.getItem('ecl_compare') || '[]'); } catch { return []; }
+  try {
+    const raw = JSON.parse(localStorage.getItem('ecl_compare') || '[]');
+    if (Array.isArray(raw)) {
+      return [...new Set(raw.filter(Boolean))].slice(0, 3);
+    }
+    return [];
+  } catch {
+    return [];
+  }
 }
+
 function setCompareSelection(ids) {
-  localStorage.setItem('ecl_compare', JSON.stringify(ids.slice(0, 3)));
+  if (!Array.isArray(ids)) ids = [];
+  const clean = [...new Set(ids.filter(Boolean))].slice(0, 3);
+  localStorage.setItem('ecl_compare', JSON.stringify(clean));
+  return clean;
+}
+
+function toggleCompareSelection(id) {
+  if (!id) return getCompareSelection();
+  let current = getCompareSelection();
+  if (current.includes(id)) {
+    current = current.filter(x => x !== id);
+  } else {
+    if (current.length >= 3) {
+      showToast('You can compare up to 3 applicants at a time.', 'error');
+      return current;
+    }
+    current.push(id);
+  }
+  return setCompareSelection(current);
+}
+
+function addToCompareSelection(id) {
+  if (!id) return getCompareSelection();
+  let current = getCompareSelection();
+  if (!current.includes(id)) {
+    if (current.length >= 3) {
+      current.shift(); // Remove oldest to fit
+    }
+    current.push(id);
+  }
+  return setCompareSelection(current);
 }

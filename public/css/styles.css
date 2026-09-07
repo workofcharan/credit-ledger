@@ -333,12 +333,18 @@ tr.phase-moratorium td { background: #fff7e8; }
 .compare-grid { display: grid; gap: 18px; }
 .compare-col-2 { grid-template-columns: repeat(2, 1fr); }
 .compare-col-3 { grid-template-columns: repeat(3, 1fr); }
-.compare-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; }
+.compare-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; box-shadow: var(--shadow-sm); transition: transform .15s ease, box-shadow .15s ease; position: relative; }
+.compare-card:hover { box-shadow: var(--shadow-md); }
 .compare-card h4 { font-size: 15px; margin-bottom: 2px; }
 .compare-card .biz { font-size: 12.5px; color: var(--text-muted); margin-bottom: 14px; }
-.compare-row { display: flex; justify-content: space-between; font-size: 13px; padding: 7px 0; border-top: 1px solid var(--surface-alt); }
-.compare-row .k { color: var(--text-muted); }
-.compare-row .v { font-weight: 700; }
+.compare-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; padding: 8px 0; border-top: 1px solid var(--surface-alt); }
+.compare-row .k { color: var(--text-muted); font-size: 12.5px; }
+.compare-row .v { font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.compare-row.highlight-diff { background: rgba(15, 148, 136, 0.04); padding-left: 6px; padding-right: 6px; border-radius: 4px; }
+.best-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; background: #e8f5e9; color: #128a3e; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(18, 138, 62, 0.2); }
+.compare-empty-slot { background: var(--surface); border: 2px dashed var(--border); border-radius: var(--radius-md); padding: 32px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 400px; }
+.compare-empty-slot .slot-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.6; }
+.compare-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; background: var(--surface); border: 1px solid var(--border); padding: 12px 18px; border-radius: var(--radius-md); }
 
 /* Toast */
 .toast { position: fixed; bottom: 24px; right: 24px; background: var(--navy-900); color: #fff; padding: 13px 20px; border-radius: var(--radius-md); font-size: 13.5px; box-shadow: var(--shadow-lg); z-index: 999; transform: translateY(20px); opacity: 0; transition: all .25s ease; }

@@ -112,7 +112,7 @@ function renderRecentTable(rows) {
   }
   wrap.innerHTML = `
     <table class="hist-table">
-      <thead><tr><th>Applicant</th><th>Credit</th><th>Fraud</th><th>Status</th><th></th></tr></thead>
+      <thead><tr><th>Applicant</th><th>Credit</th><th>Fraud</th><th>Status</th><th style="text-align:right;">Actions</th></tr></thead>
       <tbody>
         ${rows.map((r) => `
           <tr>
@@ -123,7 +123,10 @@ function renderRecentTable(rows) {
             <td><span class="band-pill band-${r.credit_band}" style="padding:2px 10px; font-size:12px;">Band ${r.credit_band} (${r.credit_score})</span></td>
             <td><span class="fraud-pill fraud-${r.fraud_band}">${r.fraud_band} (${r.fraud_score})</span></td>
             <td>${statusLabel(r)}</td>
-            <td><a class="btn btn-outline btn-sm" href="/report.html?id=${r.id}">View Report</a></td>
+            <td style="text-align:right;" class="row-actions">
+              <a class="btn btn-outline btn-sm" href="/compare.html?ids=${r.id}">⚖️ Compare</a>
+              <a class="btn btn-outline btn-sm" href="/report.html?id=${r.id}">View</a>
+            </td>
           </tr>`).join('')}
       </tbody>
     </table>`;

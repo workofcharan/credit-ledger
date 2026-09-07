@@ -36,8 +36,15 @@
 <main id="main">
   <div class="container" style="padding-top:32px; padding-bottom:64px;">
     <div class="breadcrumb"><a href="/dashboard.html">Dashboard</a> / Compare</div>
-    <h1 style="font-size:24px; margin-bottom:4px;">Compare Applicants</h1>
-    <p style="color:var(--text-muted); margin-bottom:26px;">Selections are made from <a href="/history.html">History</a>.</p>
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:12px; margin-bottom:20px;">
+      <div>
+        <h1 style="font-size:24px; margin-bottom:4px;">Compare Applicants</h1>
+        <p style="color:var(--text-muted); margin-bottom:0;">Evaluate multiple applicants side-by-side to compare credit scores, fraud signals, and loan parameters. Select up to 3 applicants.</p>
+      </div>
+      <div>
+        <a href="/history.html" class="btn btn-outline btn-sm">📋 Pick in History</a>
+      </div>
+    </div>
     <div id="compareContent"><p>Loading…</p></div>
   </div>
 </main>

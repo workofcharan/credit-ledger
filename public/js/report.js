@@ -180,6 +180,7 @@ function render() {
         </div>
       </div>
       <div class="report-actions">
+        <a class="btn btn-outline btn-sm" href="/compare.html?ids=${a.id}" id="compareThisBtn">⚖️ Compare Applicant</a>
         <button class="btn btn-outline btn-sm" id="downloadPdfBtn">📄 Download PDF Report</button>
       </div>
     </div>
