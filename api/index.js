@@ -294,6 +294,17 @@ module.exports = async function handler(req, res) {
     const parsedUrl = new URL(req.url || '/', `http://${host}`);
     let pathname = parsedUrl.pathname || '/';
 
+    // Handle Vercel serverless [...slug] catch-all parameters
+    if (req.query && req.query.slug) {
+      const slugParts = Array.isArray(req.query.slug) ? req.query.slug : [req.query.slug];
+      pathname = '/' + slugParts.join('/');
+    } else if (pathname.includes('[...slug]')) {
+      const slugParam = parsedUrl.searchParams.getAll('slug');
+      if (slugParam && slugParam.length) {
+        pathname = '/' + slugParam.join('/');
+      }
+    }
+
     // Clean /api prefix
     let apiPath = pathname.replace(/^\/api/, '');
     if (!apiPath.startsWith('/')) {

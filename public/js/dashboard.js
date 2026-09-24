@@ -56,14 +56,19 @@ function renderRecChart(breakdown) {
       labels: (breakdown || []).map((b) => (b.label || '').replace('Recommend: ', '')),
       datasets: [{
         data: (breakdown || []).map((b) => b.count),
-        backgroundColor: ['#128a3e', '#0f9488', '#b45309', '#b91c1c']
+        backgroundColor: ['#10b981', '#0d9488', '#f59e0b', '#ef4444'],
+        borderRadius: 6
       }],
     },
     options: {
       indexAxis: 'y',
       responsive: true,
+      maintainAspectRatio: false,
       plugins: { legend: { display: false } },
-      scales: { x: { ticks: { stepSize: 1, precision: 0 } } }
+      scales: {
+        x: { ticks: { stepSize: 1, precision: 0 }, grid: { color: 'rgba(0,0,0,0.04)' } },
+        y: { grid: { display: false } }
+      }
     },
   });
 }
@@ -74,15 +79,21 @@ function renderFraudChart(stats) {
   new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: ['Low', 'Medium', 'High'],
+      labels: ['Low Risk', 'Medium Risk', 'High Risk'],
       datasets: [{
         data: [stats.fraudLow || 0, stats.fraudMedium || 0, stats.fraudHigh || 0],
-        backgroundColor: ['#128a3e', '#b45309', '#b91c1c']
+        backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+        borderWidth: 2,
+        borderColor: '#ffffff'
       }],
     },
     options: {
       responsive: true,
-      plugins: { legend: { position: 'bottom' } }
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 14, font: { family: 'Plus Jakarta Sans', size: 12 } } }
+      },
+      cutout: '68%'
     },
   });
 }
@@ -96,13 +107,18 @@ function renderCreditChart(bands) {
       labels: (bands || []).map((b) => 'Band ' + b.band),
       datasets: [{
         data: (bands || []).map((b) => b.count),
-        backgroundColor: (bands || []).map((b) => bandColor(b.band))
+        backgroundColor: ['#10b981', '#059669', '#d97706', '#ea580c', '#dc2626'],
+        borderRadius: 6
       }],
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: { legend: { display: false } },
-      scales: { y: { ticks: { stepSize: 1, precision: 0 } } }
+      scales: {
+        y: { ticks: { stepSize: 1, precision: 0 }, grid: { color: 'rgba(0,0,0,0.04)' } },
+        x: { grid: { display: false } }
+      }
     },
   });
 }

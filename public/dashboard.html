@@ -52,18 +52,24 @@
       <div class="section-card" style="margin-bottom:0;">
         <h2 style="font-size:16px;">Recommendation Breakdown</h2>
         <p class="desc">What the system recommended before any officer action.</p>
-        <canvas id="recChart" height="220"></canvas>
+        <div class="chart-container">
+          <canvas id="recChart"></canvas>
+        </div>
       </div>
       <div class="section-card" style="margin-bottom:0;">
         <h2 style="font-size:16px;">Fraud Risk Distribution</h2>
         <p class="desc">Across all applications on file.</p>
-        <canvas id="fraudChart" height="220"></canvas>
+        <div class="chart-container" style="display:flex; justify-content:center;">
+          <canvas id="fraudChart"></canvas>
+        </div>
       </div>
     </div>
 
     <div class="section-card">
       <h2 style="font-size:16px;">Credit Band Distribution</h2>
-      <canvas id="creditChart" height="90"></canvas>
+      <div class="chart-container" style="height:180px;">
+        <canvas id="creditChart"></canvas>
+      </div>
     </div>
 
     <div class="section-card">
