@@ -1,5 +1,7 @@
 /**
- * Financial structuring helpers
+ * Financial structuring helpers: EMI amortization schedule with an
+ * optional moratorium (interest-only / deferred) period, and simple
+ * break-even / margin calculations for the business.
  */
 
 function buildAmortizationSchedule({ principal, annualRatePct, tenureMonths, moratoriumMonths = 0 }) {
@@ -20,6 +22,7 @@ function buildAmortizationSchedule({ principal, annualRatePct, tenureMonths, mor
 
   for (let m = 1; m <= tenureMonths; m++) {
     if (m <= moratoriumMonths) {
+      // Moratorium: interest-only, principal untouched (deferred)
       const interest = balance * monthlyRate;
       totalInterest += interest;
       schedule.push({
@@ -59,7 +62,7 @@ function buildAmortizationSchedule({ principal, annualRatePct, tenureMonths, mor
 
 function breakEven({ monthlyRevenue, monthlyExpenses, marginPct }) {
   const margin = marginPct / 100;
-  const fixedCostShare = monthlyExpenses * 0.4;
+  const fixedCostShare = monthlyExpenses * 0.4; // heuristic fixed-cost slice
   const variableCostShare = monthlyExpenses - fixedCostShare;
   const contributionMargin = Math.max(margin, 0.05);
   const breakEvenRevenue = fixedCostShare / contributionMargin;

@@ -1,6 +1,8 @@
 /**
  * Explainable, rule-based alternative-data credit scoring for rural
  * micro-entrepreneurs who typically lack formal credit history.
+ * Every factor is transparent and traceable — no black-box ML — so the
+ * officer can explain the score to the applicant on the spot.
  */
 
 const BUSINESS_RISK_WEIGHTS = {
@@ -48,7 +50,7 @@ function scoreApplicant(input) {
   factors.push({
     key: 'stability',
     label: 'Business stability',
-    detail: `${years} year(s) operating in ${input.business_type ? input.business_type.replace('_', ' ') : 'business'} (sector resilience factor ${sectorWeight})`,
+    detail: `${years} year(s) operating in ${input.business_type.replace('_', ' ')} (sector resilience factor ${sectorWeight})`,
     points: stabilityPts,
     max: 20,
   });
@@ -67,7 +69,7 @@ function scoreApplicant(input) {
     max: 20,
   });
 
-  // 4. Digital footprint (10 pts)
+  // 4. Digital footprint (10 pts) — proxy for verifiable transaction trail
   const digitalPct = clamp(Number(input.digital_payment_pct) || 0, 0, 100);
   const digitalPts = Math.round((digitalPct / 100) * 10);
   score += digitalPts;
@@ -91,7 +93,7 @@ function scoreApplicant(input) {
     max: 10,
   });
 
-  // 6. Household load (10 pts)
+  // 6. Household load (10 pts) — dependents & existing debt burden
   const dependents = Number(input.dependents) || 0;
   const existingLoanAmt = input.existing_loan === 'yes' ? (Number(input.existing_loan_amount) || 0) : 0;
   const debtToRevenue = revenue > 0 ? existingLoanAmt / (revenue * 12) : 0;

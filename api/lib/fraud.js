@@ -1,5 +1,9 @@
 /**
- * Explainable, rule-based fraud risk scoring
+ * Explainable, rule-based fraud risk scoring — deliberately separate from
+ * credit scoring. Credit risk answers "can they repay?"; fraud risk answers
+ * "is this really them, and is this application genuine?". Keeping the two
+ * scores apart is what lets a genuine, thin-credit-file applicant avoid
+ * being lumped in with actual fraud.
  */
 
 function clamp(v, min, max) {
@@ -71,7 +75,7 @@ function scoreFraud(input, duplicateCount = 0) {
     max: 10,
   });
 
-  // 6. Duplicate / repeat application signal (0-20)
+  // 6. Duplicate / repeat application signal (0-20, not user-entered — computed server-side)
   const dupPts = clamp(duplicateCount * 10, 0, 20);
   risk += dupPts;
   factors.push({

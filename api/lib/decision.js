@@ -1,5 +1,19 @@
 /**
- * Decision engine
+ * Decision engine.
+ *
+ * Core design principle: the automated system has exactly ONE power to
+ * reject — none. It can only:
+ *   (a) auto-APPROVE a case that is clean on both credit and fraud signals, or
+ *   (b) REFER every other case to a human officer, with a full explanation
+ *       and a *non-binding* recommendation.
+ *
+ * A human officer always makes the final call on anything that isn't a
+ * clean auto-approval. This is what keeps a genuine applicant — thin credit
+ * file, one noisy signal, a mismatched address because they just moved —
+ * from being silently rejected by an algorithm. Fraud risk and credit risk
+ * are also kept as two separate scores throughout, specifically so a
+ * low-credit-history-but-clearly-genuine applicant is never treated as if
+ * they were a fraud case.
  */
 
 function decide(creditResult, fraudResult) {
