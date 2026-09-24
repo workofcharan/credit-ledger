@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Fraud Radar &amp; Syndicate Network — Explainable Credit Ledger</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="tricolor-bar"></div>
+<div class="masthead">
+  <div class="container">
+    <div class="masthead-gov">
+      <svg class="emblem" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="11" stroke="#ff9933" stroke-width="1.6"/><path d="M12 5v14M6 8l12 8M18 8L6 16" stroke="#dfe6f2" stroke-width="1.1"/></svg>
+      <div class="lines"><strong>Smart India Hackathon 2026</strong><span>Explainable Credit Ledger — AI Fraud Radar &amp; Syndicate Investigator</span></div>
+    </div>
+  </div>
+</div>
+<header class="site-header">
+  <div class="container">
+    <a href="/index.html" class="brand"><span class="badge">ECL</span><span class="brand-text"><span class="name">Explainable Credit Ledger</span><span class="sub">AI Fraud Detection &amp; Explainable Credit Scoring</span></span></a>
+    <nav class="main-nav">
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/fraud-radar.html" class="active" style="color:var(--teal-deep); font-weight:700;">📡 Fraud Radar</a>
+      <a href="/new-assessment.html">New Assessment</a>
+      <a href="/review-queue.html">Review Queue</a>
+      <a href="/history.html">History</a>
+      <a href="/compare.html">Compare</a>
+      <span class="officer-chip"><span class="avatar" id="avatarInitial">?</span><span id="officerName">…</span></span>
+      <button class="nav-link" id="logoutBtn">Log Out</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container" style="padding-top:32px; padding-bottom:64px;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px; margin-bottom:24px;">
+      <div>
+        <h1 style="font-size:24px; margin-bottom:4px;">AI Fraud Radar &amp; Investigation Network</h1>
+        <p style="color:var(--text-muted); margin:0;">
+          Real-time entity resolution graph detecting shared hardware fingerprints, repeat KYC anchors, and rural syndicate fraud rings.
+        </p>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <input type="text" id="radarSearchInput" placeholder="🔍 Search applicant, ID or device..." style="padding:8px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:13px; width:240px;">
+        <a href="/new-assessment.html" class="btn btn-primary btn-sm">+ Scan New Application</a>
+      </div>
+    </div>
+
+    <!-- Live Network Metrics -->
+    <div class="kpi-strip" style="margin-bottom:24px;">
+      <div class="kpi-card"><div class="label">Total Monitored Entities</div><div class="value" id="radarMetricTotal">—</div></div>
+      <div class="kpi-card danger"><div class="label">High Fraud Isolations</div><div class="value" id="radarMetricHigh">—</div></div>
+      <div class="kpi-card warn"><div class="label">Medium Risk Alerts</div><div class="value" id="radarMetricMedium">—</div></div>
+      <div class="kpi-card good"><div class="label">Syndicate Ring Status</div><div class="value" id="radarMetricRings">—</div></div>
+    </div>
+
+    <!-- Main Visualizer Grid -->
+    <div style="display:grid; grid-template-columns: 1fr 340px; gap:20px; align-items:start;">
+      <!-- Canvas Column -->
+      <div class="section-card" style="margin-bottom:0; padding:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+          <div style="display:flex; gap:6px;">
+            <button type="button" class="btn btn-outline btn-sm radar-filter-btn active" data-filter="all">🌐 All Entities</button>
+            <button type="button" class="btn btn-outline btn-sm radar-filter-btn" data-filter="high" style="color:var(--danger); border-color:var(--danger);">🚨 High Risk Only</button>
+            <button type="button" class="btn btn-outline btn-sm radar-filter-btn" data-filter="medium">⚠️ Suspicious</button>
+            <button type="button" class="btn btn-outline btn-sm radar-filter-btn" data-filter="low">✅ Clean</button>
+          </div>
+          <div style="font-size:12px; color:var(--text-muted);">
+            💡 <em>Drag nodes to reposition · Click to inspect relationships</em>
+          </div>
+        </div>
+
+        <div style="background:#0b192c; border-radius:8px; overflow:hidden; position:relative; box-shadow:inset 0 2px 10px rgba(0,0,0,0.5);">
+          <canvas id="fraudGraphCanvas"></canvas>
+          <div style="position:absolute; bottom:12px; left:14px; background:rgba(11,25,44,0.85); backdrop-filter:blur(4px); padding:8px 12px; border-radius:6px; font-size:11.5px; color:#cbd5e1; border:1px solid rgba(255,255,255,0.1); display:flex; gap:14px;">
+            <div><span style="color:#10b981;">●</span> Low Risk</div>
+            <div><span style="color:#f59e0b;">●</span> Medium Risk</div>
+            <div><span style="color:#ef4444;">●</span> High Fraud Risk</div>
+            <div><span style="color:#64748b;">●</span> Hardware / Device</div>
+            <div><span style="color:#3b82f6;">●</span> Geo Location</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Inspector & Anomaly Feed -->
+      <div style="display:flex; flex-direction:column; gap:20px;">
+        <!-- Entity Inspector -->
+        <div class="section-card" style="margin-bottom:0; padding:18px;">
+          <h2 style="font-size:15px; margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">
+            Entity Inspector
+          </h2>
+          <div id="entityInspector">
+            <div class="empty-inspector" style="text-align:center; padding:20px 0;">
+              <div style="font-size:28px; margin-bottom:8px;">🔍</div>
+              <strong style="color:var(--navy-900);">Select Any Node</strong>
+              <p style="font-size:12px; color:var(--text-muted); margin-top:4px;">
+                Click on applicants, devices, or KYC anchors in the graph to view details.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time Anomaly Feed -->
+        <div class="section-card" style="margin-bottom:0; padding:18px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;">
+            <h2 style="font-size:15px; margin-bottom:0;">Live Fraud Radar Feed</h2>
+            <span style="font-size:11px; background:#fef2f2; color:#b91c1c; font-weight:700; padding:2px 6px; border-radius:10px;">LIVE SCANS</span>
+          </div>
+          <div id="radarAnomalyFeed" style="display:flex; flex-direction:column; gap:10px; max-height:300px; overflow-y:auto;">
+            <p style="font-size:12px; color:var(--text-muted);">Loading anomaly stream…</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div><strong>Explainable Credit Ledger</strong></div>
+    <div>This is a hackathon prototype and is not an official Government of India service.</div>
+  </div>
+</footer>
+
+<script src="/js/api.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/fraud-radar.js"></script>
+</body>
+</html>

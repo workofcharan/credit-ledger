@@ -467,3 +467,64 @@ tr.phase-moratorium td { background: #fff7e8; }
   .kpi-strip { grid-template-columns: 1fr; }
   .compare-grid { grid-template-columns: 1fr !important; }
 }
+
+/* ============================================================
+   New Feature Additions: OCR, Voice, Stress, Copilot & Radar
+   ============================================================ */
+
+/* OCR Scanner */
+.ocr-scanner-box { background: var(--surface); border: 1.5px dashed #94a3b8; border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
+.ocr-scanner-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+.ocr-icon { width: 38px; height: 38px; border-radius: 8px; background: #e0f2fe; color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.ocr-dropzone { border: 2px dashed var(--border); background: var(--surface-alt); border-radius: var(--radius-sm); padding: 24px 16px; text-align: center; margin-top: 14px; cursor: pointer; transition: all .2s ease; }
+.ocr-dropzone:hover, .ocr-dropzone.dragover { border-color: var(--teal-deep); background: #f0fdfa; }
+
+/* Voice Explainer */
+.voice-explainer-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 20px; margin-top: 20px; box-shadow: var(--shadow-sm); }
+.voice-card-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.voice-avatar-icon { width: 38px; height: 38px; border-radius: 50%; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.lang-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.lang-pill-btn { border: 1px solid var(--border); background: var(--surface-alt); color: var(--navy-900); padding: 5px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s ease; }
+.lang-pill-btn:hover { background: #e2e8f0; }
+.lang-pill-btn.active { background: var(--navy-900); color: #fff; border-color: var(--navy-900); }
+
+/* Stress Tester */
+.stress-test-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px; margin-top: 24px; box-shadow: var(--shadow-sm); }
+
+/* Agentic AI Copilot Widget */
+.copilot-fab { position: fixed; bottom: 28px; right: 28px; background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); color: #fff; border: 2px solid #818cf8; border-radius: 30px; padding: 12px 20px; font-size: 14px; font-weight: 700; box-shadow: 0 10px 25px rgba(30, 27, 75, 0.4); display: flex; align-items: center; gap: 8px; cursor: pointer; z-index: 999; transition: transform .2s ease, box-shadow .2s ease; }
+.copilot-fab:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 30px rgba(30, 27, 75, 0.5); }
+.copilot-fab-icon { font-size: 18px; }
+
+.copilot-drawer { position: fixed; bottom: 84px; right: 28px; width: 420px; max-width: calc(100vw - 36px); height: 580px; max-height: calc(100vh - 120px); background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); display: flex; flex-direction: column; z-index: 1000; overflow: hidden; animation: copilotSlideUp .25s ease-out; }
+@keyframes copilotSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.copilot-drawer-header { background: linear-gradient(135deg, #0b2038 0%, #1e1b4b 100%); color: #fff; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; }
+.copilot-avatar { width: 34px; height: 34px; border-radius: 50%; background: #4338ca; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.copilot-close-btn { background: none; border: none; color: #cbd5e1; font-size: 24px; cursor: pointer; line-height: 1; }
+.copilot-close-btn:hover { color: #fff; }
+
+.copilot-drawer-body { flex: 1; overflow-y: auto; padding: 16px; background: #f8fafc; display: flex; flex-direction: column; gap: 12px; }
+.copilot-msg { display: flex; flex-direction: column; max-width: 92%; }
+.copilot-msg.assistant { align-self: flex-start; }
+.copilot-msg.user { align-self: flex-end; }
+.copilot-msg .msg-bubble { padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.5; }
+.copilot-msg.assistant .msg-bubble { background: #ffffff; color: var(--navy-900); border: 1px solid #e2e8f0; border-top-left-radius: 2px; }
+.copilot-msg.user .msg-bubble { background: var(--navy-900); color: #ffffff; border-top-right-radius: 2px; }
+
+.copilot-chips-wrap { padding: 8px 14px; background: #f1f5f9; display: flex; gap: 6px; overflow-x: auto; border-top: 1px solid #e2e8f0; }
+.copilot-chip { background: #fff; border: 1px solid #cbd5e1; border-radius: 14px; padding: 4px 10px; font-size: 11.5px; font-weight: 600; color: var(--navy-700); white-space: nowrap; cursor: pointer; transition: all .15s ease; }
+.copilot-chip:hover { background: #e0e7ff; border-color: #818cf8; color: #3730a3; }
+
+.copilot-drawer-footer { padding: 12px 14px; background: #ffffff; border-top: 1px solid var(--border); display: flex; gap: 8px; }
+.copilot-drawer-footer input { flex: 1; border: 1.5px solid var(--border); border-radius: 20px; padding: 8px 14px; font-size: 13px; outline: none; }
+.copilot-drawer-footer input:focus { border-color: #4338ca; }
+.copilot-drawer-footer button { background: #4338ca; color: #fff; border: none; border-radius: 20px; padding: 8px 16px; font-weight: 600; font-size: 13px; cursor: pointer; }
+.copilot-drawer-footer button:hover { background: #3730a3; }
+
+/* Radar Alerts & Feed */
+.radar-alert-item { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; cursor: pointer; transition: all .15s ease; }
+.radar-alert-item:hover { transform: translateX(3px); box-shadow: var(--shadow-sm); }
+.radar-alert-item.alert-high { border-left: 4px solid var(--danger); background: #fff8f8; }
+.radar-alert-item.alert-medium { border-left: 4px solid var(--warning); background: #fffdf5; }
+

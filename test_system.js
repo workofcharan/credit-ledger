@@ -296,6 +296,9 @@ async function runTests() {
   const staticCompare = await makeRequest('GET', '/compare.html');
   assert(staticCompare.status === 200 && typeof staticCompare.body === 'string' && staticCompare.body.includes('compare.js'), 'GET /compare.html serves compare page');
 
+  const staticRadar = await makeRequest('GET', '/fraud-radar.html');
+  assert(staticRadar.status === 200 && typeof staticRadar.body === 'string' && staticRadar.body.includes('fraud-radar.js'), 'GET /fraud-radar.html serves Fraud Radar page');
+
   const staticCSS = await makeRequest('GET', '/css/styles.css');
   assert(staticCSS.status === 200 && typeof staticCSS.body === 'string' && staticCSS.body.length > 500, 'GET /css/styles.css serves valid stylesheet');
 

@@ -23,6 +23,7 @@
     <a href="/index.html" class="brand"><span class="badge">ECL</span><span class="brand-text"><span class="name">Explainable Credit Ledger</span><span class="sub">AI Fraud Detection &amp; Explainable Credit Scoring</span></span></a>
     <nav class="main-nav">
       <a href="/dashboard.html">Dashboard</a>
+      <a href="/fraud-radar.html">📡 Fraud Radar</a>
       <a href="/new-assessment.html" aria-current="page">New Assessment</a>
       <a href="/review-queue.html">Review Queue</a>
       <a href="/history.html">History</a>
@@ -50,6 +51,8 @@
         <button type="button" class="btn btn-outline btn-sm" id="loadFraudBtn">High Fraud Risk (Flagged)</button>
       </div>
     </div>
+
+    <div id="ocrScannerContainer"></div>
 
     <form id="assessForm" class="form-card">
       <h3 class="form-section-title">Applicant Details</h3>
@@ -170,6 +173,8 @@
 
 <script src="/js/api.js"></script>
 <script src="/js/common.js"></script>
+<script src="/js/doc-scanner.js"></script>
+<script src="/js/copilot.js"></script>
 <script src="/js/new-assessment.js"></script>
 </body>
 </html>

@@ -2,6 +2,34 @@ document.addEventListener('DOMContentLoaded', async () => {
   const officer = await initProtectedPage();
   if (!officer) return;
 
+  // Initialize AI Document OCR & Tampering Scanner
+  if (window.DocScanner) {
+    window.DocScanner.renderScannerWidget('ocrScannerContainer', (scanData) => {
+      const form = document.getElementById('assessForm');
+      if (scanData.name && form.elements['applicant_name']) form.elements['applicant_name'].value = scanData.name;
+      if (scanData.idRef && form.elements['id_reference']) form.elements['id_reference'].value = scanData.idRef;
+      if (scanData.village && form.elements['village']) form.elements['village'].value = scanData.village;
+      if (scanData.district && form.elements['district']) form.elements['district'].value = scanData.district;
+      if (scanData.state && form.elements['state']) form.elements['state'].value = scanData.state;
+      if (scanData.revenue && form.elements['monthly_revenue']) form.elements['monthly_revenue'].value = scanData.revenue;
+      if (scanData.businessType && form.elements['business_type']) form.elements['business_type'].value = scanData.businessType;
+      if (scanData.tamperScore > 40) {
+        setSegValue('identity_verification', 'mismatch');
+        setSegValue('device_status', 'flagged');
+        if (form.elements['income_doc_variance_pct']) form.elements['income_doc_variance_pct'].value = '55';
+      } else {
+        setSegValue('identity_verification', 'verified');
+        setSegValue('device_status', 'trusted');
+        if (form.elements['income_doc_variance_pct']) form.elements['income_doc_variance_pct'].value = '4';
+      }
+    });
+  }
+
+  // Initialize Copilot
+  if (window.CreditCopilot) {
+    window.CreditCopilot.init(null, null);
+  }
+
   // Segmented buttons interaction
   document.querySelectorAll('.segmented').forEach((group) => {
     group.addEventListener('click', (e) => {

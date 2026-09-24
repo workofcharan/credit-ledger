@@ -255,6 +255,9 @@ function render() {
         </div>
       </div>
 
+      <!-- Bharat Multilingual Voice AI Explainer -->
+      <div id="voiceExplainerRoot"></div>
+
       <!-- Financial Structuring Section -->
       <div class="section-card">
         <h2>Financial Structuring</h2>
@@ -299,6 +302,12 @@ function render() {
         </div>
       </div>
 
+      <!-- Macroeconomic & Climate Shock Stress Tester -->
+      <div id="stressTesterRoot"></div>
+
+      <!-- Tamper-Evident SHA-256 Verification Badge -->
+      <div id="auditVerifierRoot"></div>
+
       ${decisionControlsHtml()}
     </div>
   `;
@@ -309,6 +318,26 @@ function render() {
   wireStructuring();
   wireDecisionControls();
   document.getElementById('downloadPdfBtn')?.addEventListener('click', exportPdf);
+
+  // Initialize Voice Explainer
+  if (window.VoiceExplainer) {
+    window.VoiceExplainer.renderVoiceWidget('voiceExplainerRoot', a, r);
+  }
+
+  // Initialize Stress Tester
+  if (window.StressTester) {
+    window.StressTester.renderStressWidget('stressTesterRoot', a, r);
+  }
+
+  // Initialize Cryptographic Audit Verifier
+  if (window.AuditVerifier) {
+    window.AuditVerifier.renderVerificationBadge('auditVerifierRoot', a, r);
+  }
+
+  // Initialize Agentic Copilot
+  if (window.CreditCopilot) {
+    window.CreditCopilot.init(a, r);
+  }
 }
 
 function renderBalanceChart(schedule) {

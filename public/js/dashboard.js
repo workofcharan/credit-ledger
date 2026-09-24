@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     renderRecentTable(stats.recent || []);
     renderPendingPreview((stats.recent || []).filter((r) => r.requires_officer_action && !r.officer_decision));
+
+    if (window.CreditCopilot) {
+      window.CreditCopilot.init(null, null);
+    }
   } catch (err) {
     showToast(err.message, 'error');
   }
